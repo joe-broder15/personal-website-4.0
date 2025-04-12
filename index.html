@@ -3,337 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joseph Broder</title>
-    <link rel="icon" href="icon.png" type="image/png">
+    <title>Joseph Broder - Computer Security Specialist</title>
     <style>
-        /* Base styles and variables */
-        :root {
-            --primary-color: #00ff8c;
-            --secondary-color: #ff00aa;
-            --background-color: #0a0a15;
-            --text-color: #e0e0ff;
-            --card-bg: rgba(20, 20, 35, 0.8);
-            --border-neon: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
-            --font-main: 'Courier New', monospace;
-            --font-headers: 'VT323', 'Courier New', monospace;
-        }
-
-        /* Global Styles */
-        body {
-            font-family: var(--font-main);
-            background-color: var(--background-color);
-            color: var(--text-color);
+        /* Reset and base styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-text: #333;
+            --secondary-text: #444;
+            --header-text: #222;
+            --background: #fff;
+            --border-light: #eee;
+            --border-accent: #f0f0f0;
+            --link-bg: #f5f5f5;
+            --link-text: #000;
+            --blockquote-text: #555;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-xxl: 2.5rem;
+            --font-size-base: 1rem;
+            --font-size-md: 1.1rem;
+            --font-size-lg: 1.75rem;
+            --font-size-xl: 2.75rem;
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            background-image: 
-                linear-gradient(to right, rgba(0, 255, 140, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 255, 140, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            color: var(--primary-text);
+            background-color: var(--background);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: var(--spacing-xxl);
         }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s, text-shadow 0.3s;
+        
+        /* Typography */
+        h1 {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
         }
-
-        a:hover {
-            color: var(--secondary-color);
-            text-shadow: 0 0 5px var(--secondary-color);
+        
+        h2 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-xs);
+            border-bottom: 2px solid var(--border-accent);
+            color: var(--header-text);
         }
-
-        h1, h2 {
-            font-family: var(--font-headers);
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
+        
+        p {
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-md);
+            color: var(--secondary-text);
         }
-
-        /* Main Container */
+        
+        ul {
+            margin-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        li {
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--font-size-md);
+            color: var(--secondary-text);
+        }
+        
+        /* Layout */
         .container {
-            background: var(--card-bg);
-            border: 1px solid var(--primary-color);
-            border-radius: 10px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: var(--border-neon);
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Profile Section */
-        .profile {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            /* margin-bottom: 1rem; */
+            gap: 3rem;
         }
-
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            box-shadow: var(--border-neon);
-            margin-bottom: 1.5rem;
-            max-width: 100%;
-        }
-
-        .clearance-tag {
-            display: inline-block;
-            background: rgba(255, 0, 170, 0.2);
-            color: var(--secondary-color);
-            padding: 0.2rem 0.7rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            border: 1px solid var(--secondary-color);
-            margin-top: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .summary {
-            margin-bottom: 2rem;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        /* Links Section */
-        .links-section {
-            margin-top: 2rem;
-        }
-
-        .links-title {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
-
-        .links-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .links-list li {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(0, 255, 140, 0.2);
-            padding-bottom: 0.7rem;
-        }
-
-        .links-list li:last-child {
-            border-bottom: none;
-        }
-
-        .links-list li a {
-            display: block;
-            padding: 0.3rem 0;
-            transition: transform 0.3s;
-        }
-
-        .links-list li a:hover {
-            transform: translateX(10px);
-        }
-
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.1;
-        }
-
-        /* Retro terminal effect */
-        .terminal-effect {
-            position: relative;
-        }
-
-        .terminal-effect::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            z-index: 1000;
-        }
-
-        /* Loading animation */
-        .loading {
+        
+        .header {
             display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            flex-direction: row;
+            align-items: center;
+            gap: var(--spacing-xxl);
+            margin-bottom: var(--spacing-md);
         }
-
-        .loading span {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            margin: 0 5px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            animation: loading 1.5s infinite ease-in-out;
+        
+        .profile-image {
+            width: 220px;
+            height: 220px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
         }
-
-        .loading span:nth-child(2) {
+        
+        .profile-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .bio {
+            flex: 1;
+        }
+        
+        /* Links section */
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .link-item {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background-color: var(--link-bg);
+            border: 1px solid var(--link-text);
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--link-text);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .link-item:hover {
+            background-color: var(--link-text);
+            color: var(--background);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Sections */
+        section {
+            padding: var(--spacing-md) 0;
+        }
+        
+        blockquote {
+            border-left: 4px solid #333;
+            padding-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            font-style: italic;
+            color: var(--blockquote-text);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-light);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-lg);
+            }
+            
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: var(--spacing-lg);
+            }
+            
+            .bio .links {
+                justify-content: center;
+            }
+            
+            .profile-image {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: var(--spacing-md);
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            p, li {
+                font-size: var(--font-size-base);
+            }
+            
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .links {
+                gap: var(--spacing-xs);
+                margin-top: var(--spacing-md);
+            }
+            
+            .link-item {
+                padding: var(--spacing-xs) var(--spacing-md);
+                font-size: 0.9rem;
+                flex-grow: 1;
+                justify-content: center;
+            }
+            
+            .container {
+                gap: 2rem;
+            }
+        }
+        
+        /* Fix for viewport height on mobile */
+        @supports (-webkit-touch-callout: none) {
+            html, body {
+                min-height: -webkit-fill-available;
+            }
+        }
+        
+        /* Animations and transitions */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes gentle-pulse {
+            0% {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+            50% {
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            }
+            100% {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            }
+        }
+        
+        /* Apply animations to elements */
+        .container {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        section:not(.header) {
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        section:nth-child(2) {
             animation-delay: 0.2s;
         }
-
-        .loading span:nth-child(3) {
+        
+        section:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        section:nth-child(4) {
             animation-delay: 0.4s;
         }
-
-        @keyframes loading {
-            0%, 100% { transform: scale(0); }
-            50% { transform: scale(1); }
+        
+        .profile-image {
+            animation: gentle-pulse 4s infinite ease-in-out;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.5s ease;
         }
-
-        /* Responsive styles */
-        @media (max-width: 600px) {
-            .container {
-                padding: 1.5rem;
-                width: 85%;
-            }
-            
-            .profile-img {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .summary {
-                font-size: 0.9rem;
-            }
+        
+        .profile-image:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .link-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.6s;
+            transform: skewX(-25deg);
+        }
+        
+        .link-item:hover::before {
+            transform: skewX(-25deg) translateX(200%);
+        }
+        
+        .link-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
     </style>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"> -->
 </head>
-<body class="terminal-effect">
-    <canvas id="matrix" class="matrix-rain"></canvas>
-    
-    <!-- Loading animation initially visible -->
-    <div class="loading" id="loading">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    
-    <!-- Content initially hidden -->
-    <div class="container" id="content" style="display: none;">
-        <div class="profile">
-            <img src="joebroder.jpg" alt="Profile Picture" class="profile-img">
-            <h1>Joseph Broder</h1>
-        </div>
+<body>
+    <div class="container">
+        <section class="header">
+            <img src="/api/placeholder/220/220" alt="Joseph Broder Profile Picture" class="profile-image">
+            <div class="bio">
+                <h1>Joseph Broder</h1>
+                
+                <div class="links">
+                    <a href="joe-broder-resume.pdf" class="link-item">Resume</a>
+                    <a href="https://www.linkedin.com/in/jdbroder/" class="link-item">LinkedIn</a>
+                    <a href="mailto:joe.broder@proton.me" class="link-item">Email</a>
+                    <a href="https://github.com/joe-broder15" class="link-item">GitHub</a>
+                </div>
+            </div>
+        </section>
         
-        <div class="summary">
-            <p>
-                NSA software engineer and  exploitation analyst with Top Secret / SCI clearance. Over three years of experience in signals intelligence 
-                leading offensive cyber operations against adversaries, reverse engineering state sponsored software, and developing cutting-edge computer 
-                network exploitation tools.
-            </p>
-        </div>
+        <section>
+            <h2>About Me</h2>
+            <blockquote>
+                <p>"NSA software engineer and certified exploitation analyst with Top Secret / SCI clearance. Over three years of experience in signals intelligence leading offensive cyber operations against adversaries, reverse engineering state-sponsored software, and developing cutting-edge computer network exploitation tools."</p>
+            </blockquote>
+            <p>That's the official description of my government work (based on the declassification case number in my resume). Beyond that, I'm currently a graduate student at Johns Hopkins University pursuing an M.S. in Computer Science with a concentration in Cybersecurity.</p>
+            <p>Before joining the DoD, I earned my B.S. in Electrical Engineering and Computer Science from UC Berkeley. While there, I was involved with Blockchain at Berkeley (though I'm not particularly enthusiastic about the current state of the blockchain space—I'm more interested in how we might use it to build a better internet).</p>
+            <p>During undergrad, I spent about a year at Intel as a security engineer through a summer internship and a 6-month co-op. I implemented firmware-level platform security features for Optane drives as well as standard enterprise SSDs. If your datacenter is using Intel SSDs, I may have built your firmware attestation module.</p>
+        </section>
         
-        <div class="links-section">
-            <h2 class="links-title">Links</h2>
-            
-            <ul class="links-list" >
-                <li><a href="https://github.com/joe-broder15">> GitHub</a></li>
-                <li><a href="https://www.linkedin.com/in/jdbroder/">> LinkedIn</a></li>
-                <li><a href="joe-broder-resume.pdf">> Download Resume</a></li>
-                <li><a href="mailto:joe.broder@proton.me">> Email (joe.broder@proton.me)</a></li>
+        <section>
+            <h2>Technical Interests</h2>
+            <p>Obviously, I'm interested in cybersecurity, but if you want more specifics:</p>
+            <ul>
+                <li>Reverse engineering and vulnerability research</li>
+                <li>LLM agents and their applications in security</li>
+                <li>Network forensics and threat intelligence</li>
+                <li>Operating systems and low-level systems programming</li>
+                <li>Security engineering and software development</li>
             </ul>
-        </div>
+        </section>
+        
+        <section>
+            <h2>Hobbies</h2>
+            <p>Long walks on the beach and other things I like to do:</p>
+            <ul>
+                <li>Participating in CTF competitions and security challenges</li>
+                <li>Following history and current events</li>
+                <li>Running random Docker containers on my home server</li>
+                <li>Exercising and weightlifting</li>
+                <li>Watching anime and reading manga (I'm a huge fan of JoJo's Bizarre Adventure)</li>
+                <li>Cooking and exploring new cuisines</li>
+            </ul>
+        </section>
+        
+        <footer>
+            <p>© 2025 Joseph Broder. All rights reserved.</p>
+        </footer>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Matrix effect for background
-            const canvas = document.getElementById('matrix');
-            const ctx = canvas.getContext('2d');
-            
-            // Making the canvas full screen
-            canvas.height = window.innerHeight;
-            canvas.width = window.innerWidth;
-            
-            // Characters
-            const matrix = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
-            // Converting the string into an array of single characters
-            const characters = matrix.split("");
-            
-            const fontSize = 10;
-            const columns = canvas.width / fontSize; // Number of columns for the rain
-            
-            // An array of drops - one per column
-            const drops = [];
-            // X below is the x coordinate
-            // 1 = y coordinate of the drop (same for every drop initially)
-            for (let x = 0; x < columns; x++) {
-                drops[x] = 1;
-            }
-            
-            // Drawing the characters
-            function draw() {
-                // Black BG for the canvas, translucent to show trail
-                ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = "#00ff8c";
-                ctx.font = fontSize + "px monospace";
-                
-                // Looping over drops
-                for (let i = 0; i < drops.length; i++) {
-                    // A random character to print
-                    const text = characters[Math.floor(Math.random() * characters.length)];
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    // Sending the drop back to the top randomly after it has crossed the screen
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    
-                    // Incrementing Y coordinate
-                    drops[i]++;
-                }
-            }
-            
-            // Show loading animation for a short time
-            setTimeout(function() {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('content').style.display = 'block';
-            }, 1500);
-            
-            // Run matrix effect
-            setInterval(draw, 35);
-            
-            // Resize the canvas when the window is resized
-            window.addEventListener('resize', function() {
-                canvas.height = window.innerHeight;
-                canvas.width = window.innerWidth;
-            });
-        });
-    </script>
 </body>
 </html>
